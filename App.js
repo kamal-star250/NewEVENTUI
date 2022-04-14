@@ -5,11 +5,19 @@ import {View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import LOGO from './Src/Assets/SVGFiles/LOGO.svg';
 
 function HomeScreen() {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        backgroundColor: '#000',
+        justifyContent: 'center',
+      }}>
       <Text>Home Screen</Text>
+      <LOGO width={100} height={100} />
     </View>
   );
 }
