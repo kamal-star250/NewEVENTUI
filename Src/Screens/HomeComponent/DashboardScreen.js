@@ -42,6 +42,7 @@ const DashboardScreen = () => {
     },
     {
       id: 4,
+
       sub_name: 'Photography',
     },
   ]);
