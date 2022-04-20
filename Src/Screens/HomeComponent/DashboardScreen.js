@@ -8,6 +8,7 @@ import {
   FlatList,
   ImageBackground,
   StyleSheet,
+  StatusBar,
 } from 'react-native';
 
 import Styles from '../../Comman/CommanStyles';
@@ -21,48 +22,48 @@ import TotalImages from '../../Assets/SVGFiles/totalImages.svg';
 import Filter from '../../Assets/SVGFiles/filterIcon.svg';
 import LocationIcon from '../../Assets/SVGFiles/locationIcon.svg';
 import NotificationIcon from '../../Assets/SVGFiles/notificationIcon.svg';
+import CityListModal from '../../Comman/CityListModal';
+import {subCategoryList, offerList, AdList} from '../../Comman/DummyData';
 
 const DashboardScreen = () => {
-  const [subCatList, setSubCatList] = useState([
-    {
-      id: 0,
-      sub_name: 'gifts',
-    },
-    {
-      id: 1,
-      sub_name: 'music',
-    },
-    {
-      id: 2,
-      sub_name: 'Places',
-    },
-    {
-      id: 3,
-      sub_name: 'Events',
-    },
-    {
-      id: 4,
-      sub_name: 'Photography',
-    },
-  ]);
+  const [subCatList, setSubCatList] = useState(subCategoryList);
+  const [offerListData, setOfferListData] = useState(offerList);
+  const [adsList, setAdsList] = useState(AdList);
   const [selectesSubCat, setSelectedSubCat] = useState('');
+  const [cityModal, setCityModal] = useState(false);
+  const [selectedCity, setSelectedCity] = useState('Taif, Mecca');
+
   return (
     <SafeAreaView style={{flex: 1}} backgroundColor="#fff">
+      <CityListModal
+        countryListOpen={cityModal}
+        hideModal={() => {
+          setCityModal(false);
+        }}
+        selectedCityCode={item => {
+          setSelectedCity(item.countryname);
+          setCityModal(false);
+        }}
+      />
       <View style={Styles.mainContainer}>
+        <StatusBar backgroundColor="#fff" barStyle="dark-content" />
         <Header
           leftComponent={
-            <View
+            <TouchableOpacity
+              onPress={() => {
+                setCityModal(true);
+              }}
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
               }}>
               <Text style={{fontFamily: Theme.Font.Regular, color: '#222222'}}>
-                Taif, Mecca
+                {selectedCity}
               </Text>
               <View style={{left: 5}}>
                 <LocationIcon width={15} height={20} style={{color: '#000'}} />
               </View>
-            </View>
+            </TouchableOpacity>
           }
           title={<Text></Text>}
           rightComponent={
@@ -127,7 +128,7 @@ const DashboardScreen = () => {
             <FlatList
               showsHorizontalScrollIndicator={false}
               horizontal
-              data={subCatList}
+              data={offerList}
               renderItem={({item}) => {
                 return (
                   <View style={styles.offerContainer}>
@@ -135,12 +136,8 @@ const DashboardScreen = () => {
                       borderRadius={10}
                       source={Theme.Images.offerBackImage}
                       style={styles.offerImage}>
-                      <Text style={styles.offerText}>
-                        An exclusive offer for the event Platform
-                      </Text>
-                      <Text style={styles.offerPriceText}>
-                        starting from 250 riyals
-                      </Text>
+                      <Text style={styles.offerText}>{item.heading}</Text>
+                      <Text style={styles.offerPriceText}>{item.price}</Text>
                     </ImageBackground>
                   </View>
                 );
@@ -150,7 +147,7 @@ const DashboardScreen = () => {
 
           <Text style={styles.popularTextStyle}>Featured</Text>
           <FlatList
-            data={subCatList}
+            data={adsList}
             renderItem={({item}) => {
               return (
                 <View style={{width: '100%', height: 220, padding: 10}}>
@@ -175,7 +172,7 @@ const DashboardScreen = () => {
                           fontFamily: Theme.Font.Regular,
                           color: '#222222',
                         }}>
-                        0.0
+                        {item.rattings}
                         <Star width={15} height={15} />
                       </Text>
 
@@ -184,12 +181,12 @@ const DashboardScreen = () => {
                           fontFamily: Theme.Font.Medium,
                           color: '#222222',
                         }}>
-                        Places to visit in Taif
+                        {item.about}
                       </Text>
                     </View>
                     <View style={styles.calanderRow}>
-                      <Text style={styles.priceText}>$100</Text>
-                      <Text style={styles.priceText}>21 march, 2022</Text>
+                      <Text style={styles.priceText}>{item.price}</Text>
+                      <Text style={styles.priceText}>{item.createdDate}</Text>
                       <Calander
                         width={15}
                         height={15}

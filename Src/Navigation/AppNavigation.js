@@ -18,6 +18,7 @@ import SignupScreen from '../Screens/AuthScreens/SignupScreen';
 
 /// other stack screens
 import DashboardScreen from '../Screens/HomeComponent/DashboardScreen';
+import AboutAdScreen from '../Screens/HomeComponent/AboutAdScreen';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -37,8 +38,11 @@ function AuthScreens() {
 }
 function OtherScreenStack() {
   return (
-    <OtherStack.Navigator screenOptions={{headerShown: false}}>
+    <OtherStack.Navigator
+      screenOptions={{headerShown: false}}
+      initialRouteName="AboutAdScreen">
       <OtherStack.Screen name="DashboardScreen" component={DashboardScreen} />
+      <OtherStack.Screen name="AboutAdScreen" component={AboutAdScreen} />
     </OtherStack.Navigator>
   );
 }
