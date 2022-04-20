@@ -3,9 +3,10 @@ export const Font = {
   Bold: 'DMSans-Bold',
   Medium: 'DMSans-Medium',
 };
-export const SVG = {
-  LeftIcon: require('../Assets/SVGFiles/loginIcon.svg'),
+export const Images = {
+  offerBackImage: require('../Assets/Images/offerBackImage.png'),
+  dummyAdImage: require('../Assets/Images/dummyAds.png'),
 };
 
-const Theme = {Font, SVG};
+const Theme = {Font, Images};
 export default Theme;

@@ -5,7 +5,7 @@ import {
   SafeAreaView,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
+  Stylesheet,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import InputContainer from '../../Comman/InputContainer';
@@ -15,29 +15,33 @@ import Button from '../../Comman/Button';
 
 // import svg icon's
 import LeftIcon from '../../Assets/SVGFiles/loginIcon.svg';
-import LoginCallIcon from '../../Assets/SVGFiles/loginCall.svg';
-import RightGreen from '../../Assets/SVGFiles/rightGreen.svg';
-import LoginEmail from '../../Assets/SVGFiles/loginEmail.svg';
-import LoginPassword from '../../Assets/SVGFiles/loginPassword.svg';
+import LoginCallIcon from '../../Assets/SVGFiles/loginCall';
+import RightGreen from '../../Assets/SVGFiles/rightGreen';
+import LoginEmail from '../../Assets/SVGFiles/loginEmail';
+import LoginPassword from '../../Assets/SVGFiles/loginPassword';
 import ButtonLoading from '../../Comman/ButtonLoading';
 import CountryCodeModal from './CountryCodeModal';
 
-const LoginScreen = ({navigation}) => {
+const SignupScreen = ({navigation}) => {
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [phoneNumberError, setPhoneNumberError] = useState(false);
+  const [phoneNumberError, setPhoneNumberError] = useState('');
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
+  const [buttonLoader, setButtonLoader] = useState(false);
   const [countryListOpen, setCountryListOpen] = useState(false);
   const [choosedCity, setChoosedCity] = useState({
     country_code: '+966',
     countryname: 'Saudi Arabia',
   });
-  const [buttonLoader, setButtonLoader] = useState(false);
 
-  const LoginPress = () => {
+  const SignupPress = () => {
     console.log('callled');
     if (phoneNumber == '') {
       setPhoneNumberError(true);
+    } else if (email == '') {
+      setEmailError(true);
     } else if (password == '') {
       setPasswordError(true);
     } else {
@@ -46,15 +50,15 @@ const LoginScreen = ({navigation}) => {
   };
   const callLoginAPI = () => {
     // let phoneNumber = phoneNumber.trim();
+    // let email = email.trim();
     // let password = password.trim();
     console.log('api called');
     setButtonLoader(true);
     setTimeout(() => {
       setButtonLoader(false);
-      navigation.navigate('DrawerStack');
+      navigation.navigate('LoginScreen');
     }, 1000);
   };
-
   return (
     <SafeAreaView style={{flex: 1}} backgroundColor="#fff">
       <CountryCodeModal
@@ -78,7 +82,7 @@ const LoginScreen = ({navigation}) => {
             <LeftIcon width={40} height={40} style={{color: '#000'}} />
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('SignupScreen');
+                navigation.navigate('LoginScreen');
               }}>
               <Text
                 style={{
@@ -87,12 +91,12 @@ const LoginScreen = ({navigation}) => {
                   color: '#9A9FA5',
                 }}>
                 Already a member?
-                <Text style={{color: '#000', marginLeft: 5}}>Sign up</Text>
+                <Text style={{color: '#000', marginLeft: 5}}>Sign in</Text>
               </Text>
             </TouchableOpacity>
           </View>
           <View style={{flex: 1, paddingHorizontal: 10}}>
-            <Text style={Styles.pageHeading}>Login</Text>
+            <Text style={Styles.pageHeading}>Sign up</Text>
             <Text style={Styles.inputHeading}>Phone number</Text>
             <InputContainer
               leftArea={
@@ -134,7 +138,35 @@ const LoginScreen = ({navigation}) => {
                 Please provide the phone number
               </Text>
             ) : null}
-
+            <Text style={Styles.inputHeading}>Email</Text>
+            <InputContainer
+              leftArea={
+                <>
+                  <LoginEmail width={25} height={20} style={{color: '#000'}} />
+                  <View style={Styles.rightSideBorder} />
+                </>
+              }
+              centerArea={
+                <TextInput
+                  style={Styles.inputStyle}
+                  keyboardType="email-address"
+                  maxLength={30}
+                  onChangeText={text => {
+                    setEmail(text);
+                  }}
+                />
+              }
+              rightArea={
+                email.length > 8 ? (
+                  <RightGreen width={25} height={20} style={{color: '#000'}} />
+                ) : null
+              }
+            />
+            {emailError && email.length < 1 ? (
+              <Text style={Styles.errorMessageText}>
+                Please provide the email
+              </Text>
+            ) : null}
             <Text style={Styles.inputHeading}>Password</Text>
             <InputContainer
               leftArea={
@@ -173,22 +205,13 @@ const LoginScreen = ({navigation}) => {
                 <Button
                   buttonName={'Continue'}
                   onPress={() => {
-                    LoginPress();
+                    SignupPress();
                   }}
                 />
               ) : (
                 <ButtonLoading />
               )}
             </View>
-            <TouchableOpacity style={{alignSelf: 'center'}}>
-              <Text
-                style={{
-                  fontFamily: Theme.Font.Medium,
-                  fontWeight: '600',
-                }}>
-                Or continue with email address
-              </Text>
-            </TouchableOpacity>
           </View>
         </KeyboardAwareScrollView>
       </View>
@@ -196,4 +219,4 @@ const LoginScreen = ({navigation}) => {
   );
 };
 
-export default LoginScreen;
+export default SignupScreen;

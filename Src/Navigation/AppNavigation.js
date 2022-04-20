@@ -9,79 +9,53 @@ import {
   CardStyleInterpolators,
 } from '@react-navigation/native-stack';
 
-// import {
-//   CardStyleInterpolators,
-//   createStackNavigator,
-// } from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+
+// imprort all screens
 import SplashScreen from '../Screens/AuthScreens/SplashScreen';
 import LoginScreen from '../Screens/AuthScreens/LoginScreen';
+import SignupScreen from '../Screens/AuthScreens/SignupScreen';
 
-function HomeScreen() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#f2f2f2',
-        justifyContent: 'center',
-      }}>
-      <Text style={{fontSize: 30}}>Home Screen</Text>
-      <View
-        style={{
-          width: 140,
-          height: 150,
-          backgroundColor: '#fff',
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 1,
-          },
-          shadowOpacity: 0.22,
-          shadowRadius: 2.22,
-          elevation: 3,
-        }}></View>
-      {/* <LOGO width={100} height={100} /> */}
-    </View>
-  );
-}
+/// other stack screens
+import DashboardScreen from '../Screens/HomeComponent/DashboardScreen';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 const AuthStack = createNativeStackNavigator();
+const OtherStack = createNativeStackNavigator();
 
 function AuthScreens() {
   return (
-    <AuthStack.Navigator screenOptions={{headerShown: false}}>
-      <AuthStack.Screen
-        name="LoginScreen"
-        component={LoginScreen}
-        // screenOptions={{
-        //   cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        // }}
-      />
-      <AuthStack.Screen
-        name="SplashScreen"
-        component={SplashScreen}
-        // screenOptions={{
-        //   cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        // }}
-      />
+    <AuthStack.Navigator
+      screenOptions={{headerShown: false}}
+      initialRouteName="SignupScreen">
+      <AuthStack.Screen name="SplashScreen" component={SplashScreen} />
+      <AuthStack.Screen name="LoginScreen" component={LoginScreen} />
+      <AuthStack.Screen name="SignupScreen" component={SignupScreen} />
     </AuthStack.Navigator>
+  );
+}
+function OtherScreenStack() {
+  return (
+    <OtherStack.Navigator screenOptions={{headerShown: false}}>
+      <OtherStack.Screen name="DashboardScreen" component={DashboardScreen} />
+    </OtherStack.Navigator>
   );
 }
 
 function DrawerStack() {
   return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="MyStack" component={MyStack} />
+    <Drawer.Navigator screenOptions={{headerShown: false}}>
+      <Drawer.Screen name="OtherScreenStack" component={OtherScreenStack} />
     </Drawer.Navigator>
   );
 }
 function AppNavigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator
+        screenOptions={{headerShown: false}}
+        initialRouteName="DrawerStack">
         <Stack.Screen
           name="AuthScreens"
           component={AuthScreens}

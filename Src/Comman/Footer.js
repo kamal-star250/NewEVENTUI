@@ -4,13 +4,15 @@ import HomeIcon from '../Assets/SVGFiles/home.svg';
 import SearchIcon from '../Assets/SVGFiles/search.svg';
 import ChatIcon from '../Assets/SVGFiles/chat.svg';
 import ProfileIcon from '../Assets/SVGFiles/profile.svg';
+import Plus from '../Assets/SVGFiles/plus.svg';
 
 const Footer = () => {
   return (
     <View
       style={{
         width: '100%',
-        height: 45,
+        alignSelf: 'center',
+        height: 50,
         padding: 10,
         backgroundColor: '#fff',
         flexDirection: 'row',
@@ -18,11 +20,23 @@ const Footer = () => {
         justifyContent: 'space-between',
       }}>
       <TouchableOpacity>
-        <HomeIcon width={40} height={40} style={{color: '#000'}} />
+        <HomeIcon width={25} height={25} style={{color: '#000'}} />
       </TouchableOpacity>
-      <SearchIcon width={40} height={40} style={{color: '#000'}} />
-      <ChatIcon width={40} height={40} style={{color: '#000'}} />
-      <ProfileIcon width={40} height={40} style={{color: '#000'}} />
+      <SearchIcon width={25} height={25} style={{color: '#000'}} />
+      <TouchableOpacity
+        style={{
+          width: 45,
+          height: 45,
+          borderRadius: 22.5,
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#F81F59',
+          top: -30,
+        }}>
+        <Plus width={25} height={25} style={{color: '#000'}} />
+      </TouchableOpacity>
+      <ChatIcon width={25} height={25} style={{color: '#000'}} />
+      <ProfileIcon width={25} height={25} style={{color: '#000'}} />
     </View>
   );
 };

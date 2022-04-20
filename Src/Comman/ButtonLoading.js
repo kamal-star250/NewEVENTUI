@@ -1,12 +1,18 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, Text, Image, View} from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  Image,
+  View,
+  ActivityIndicator,
+} from 'react-native';
 import Theme from './Theme';
 
-const Button = ({buttonName, onPress}) => {
+const ButtonLoading = () => {
   return (
     <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={onPress}
+      activeOpacity={1}
+      disabled={true}
       style={{
         width: '100%',
         height: 50,
@@ -15,11 +21,9 @@ const Button = ({buttonName, onPress}) => {
         justifyContent: 'center',
         backgroundColor: '#F81F59',
       }}>
-      <Text style={{fontFamily: Theme.Font.Bold, color: '#fff', fontSize: 16}}>
-        {buttonName}
-      </Text>
+      <ActivityIndicator color={'#fff'} size="large" />
     </TouchableOpacity>
   );
 };
 
-export default Button;
+export default ButtonLoading;
