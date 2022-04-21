@@ -24,6 +24,7 @@ import AdAuther from './AdAuther';
 import ReviewsList from './ReviewsList';
 import SimilarAds from './SimilarAds';
 import {color} from 'react-native-reanimated';
+import ContactMeModal from './ContactMeModal';
 
 const AboutAdScreen = () => {
   const [swipeList, setSwipeList] = useState(swiperListData);
@@ -31,6 +32,7 @@ const AboutAdScreen = () => {
   const [selectedTab, setSelectedTab] = useState('Description');
   const [similarListData, setSimilarListData] = useState(AdList);
   const [mainLoader, setMainLoader] = useState(true);
+  const [contactModal, setContactModal] = useState(false);
 
   ///////////////////////////////////
   useEffect(() => {
@@ -41,6 +43,12 @@ const AboutAdScreen = () => {
   return (
     <View style={[Styles.mainContainer, {paddingHorizontal: 0}]}>
       <StatusBar backgroundColor="#fff" barStyle="dark-content" />
+      <ContactMeModal
+        openModal={contactModal}
+        closeModal={() => {
+          setContactModal(false);
+        }}
+      />
       {mainLoader ? (
         <View
           style={[
@@ -248,7 +256,11 @@ const AboutAdScreen = () => {
             </View>
           </ScrollView>
           {/* ====================== contact me button ========================= */}
-          <View
+          <TouchableOpacity
+            onPress={() => {
+              setContactModal(true);
+            }}
+            activeOpacity={0.5}
             style={{
               width: width,
               height: 50,
@@ -266,7 +278,7 @@ const AboutAdScreen = () => {
               }}>
               Hi, Contact me
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
       )}
     </View>
